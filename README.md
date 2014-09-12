@@ -12,3 +12,6 @@ All firmware and hardware designs are open source and are available from our sit
 Electric Motor Werks, Inc. is a California company passionate about driving EV 
 (Electric Vehicle) adoption throughout the world. We have already helped over a 
 2000 people drive electric!
+
+THIS REQUIRES Arduino version 0022 to compile - it will NOT work in the most recent
+version of Arduino!
