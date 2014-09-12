@@ -727,7 +727,7 @@ void sampleInterrupt() {
           //==================== end PID loop ====================
           
           // protect against overpowering
-          if( (deltaDuty>0) && (outC > maxOutC) ) deltaDuty=0;
+          if( (deltaDuty>0) && (outC > 1.1*maxOutC) ) deltaDuty=0;
           
           milliduty += deltaDuty;
           if(milliduty < 0) {
@@ -1290,7 +1290,7 @@ int runChargeStep() {
       } else {        
         // recalc maxOutC1 - this will account for temp derating
         maxOutC1=getAllowedC(maxOutC);
-        delay(30); // a delay equivalent to non-LCD execution
+        delay(30); // a delay equivalent to non-LCD execution time
       }
     }
     
@@ -1304,7 +1304,7 @@ int runChargeStep() {
 
       // check for break conditions 
       // mask the first few seconds
-      if(sec_up>CV_timeout && outV > maxOutV && outC < configuration.AH*min_CV_Crating) {
+      if(sec_up>CV_timeout && outV > maxOutV && maxOutC1 < configuration.AH*min_CV_Crating) {
         breakCycle=1;
       } else {
         breakCycle=0; // reset 
@@ -1323,8 +1323,8 @@ int runChargeStep() {
       // slow voltage control cycle here. AT Cstep=0.5A default, we are ramping down at ~0.5A/second
       // this may not be enough to avoid a bit of overvoltage beyond CV
       if(outV > maxOutV) {
-        maxOutC1-=Cstep;
-        if(maxOutC1<0) maxOutC1=0;
+        maxOutC-=Cstep;
+        if(maxOutC<0) maxOutC=0;
       }    
       
       // AH meter
@@ -1464,7 +1464,7 @@ float getAllowedC(float userMaxC) {
         if(normT<midHeatSinkT) {
           if(LCD_on) myLCD->clrScreen();
           PWM_enable_=1; // restart PWM
-          maxOutC1=maxOutC; // full power
+          maxOutC1=userMaxC; // full power
           break; // exit cycle when the temp drops enough
         }
       }
