@@ -3,7 +3,7 @@ VMCharger
 
 Open Source DC Charger for Electric Vehicles - up to 50kW
 
-Product running this firmware include SmartCharge-12000 and QuickCharge-25000 - 
+Products running this firmware include SmartCharge-12000 and QuickCharge-25000 - 
 both available from http://www.emotorwerks.com
 
 These are intelligent, open source DC EV Chargers from Electric Motor Werks, Inc. 
